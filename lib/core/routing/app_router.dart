@@ -1,8 +1,12 @@
 import 'package:doctor_appointment_app/core/routing/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../features/home/ui/home_screen.dart';
+import '../../features/login/logic/cubit/login_cubit.dart';
 import '../../features/login/ui/login_screen.dart';
 import '../../features/onBoarding/on_boarding_screen.dart';
+import '../di/dependency_injection.dart';
 
 class AppRouter {
   Route generateRoute(RouteSettings settings) {
@@ -12,9 +16,12 @@ class AppRouter {
       case Routes.onBoardingScreen:
         return MaterialPageRoute(builder: (_) => const OnBoardingScreen());
       case Routes.loginScreen:
-        return MaterialPageRoute(builder: (_) => const LoginScreen());
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                create: (_) => getIt<LoginCubit>(),
+                child: const LoginScreen()));
       case Routes.homeScreen:
-        return MaterialPageRoute(builder: (_) => const Placeholder());
+        return MaterialPageRoute(builder: (_) => const HomeScreen());
       case Routes.registerScreen:
         return MaterialPageRoute(builder: (_) => const Placeholder());
       default:

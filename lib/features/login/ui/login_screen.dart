@@ -1,12 +1,16 @@
 import 'package:doctor_appointment_app/core/helper/spacing.dart';
 import 'package:doctor_appointment_app/core/theming/styles.dart';
-import 'package:doctor_appointment_app/core/widgets/app_text_form_field.dart';
+import 'package:doctor_appointment_app/features/login/data/models/login_request_body.dart';
+import 'package:doctor_appointment_app/features/login/ui/widgets/check_box_for_remember_me.dart';
 import 'package:doctor_appointment_app/features/login/ui/widgets/term_and_condition_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../core/theming/colors.dart';
+import '../logic/cubit/login_cubit.dart';
 import 'widgets/already_have_account_text.dart';
 import '../../../core/widgets/app_text_button.dart';
+import 'widgets/email_and_password.dart';
+import 'widgets/login_bloc_listener.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -16,9 +20,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _formKey = GlobalKey<FormState>();
-  bool isObscureText = true;
-  bool isTrue = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,75 +40,34 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: TextStyles.font14GreyRegular,
                 ),
                 verticalSpace(36),
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      verticalSpace(36),
-                      const AppTextFormField(hintText: 'Email'),
-                      verticalSpace(18),
-                      AppTextFormField(
-                        hintText: 'password',
-                        isObscureText: isObscureText,
-                        suffixIcon: IconButton(
-                          onPressed: () {
-                            setState(() {
-                              isObscureText = !isObscureText;
-                            });
-                          },
-                          icon: Icon(
-                            isObscureText
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                          ),
+                Column(
+                  children: [
+                    const EmailAndPassword(),
+                    verticalSpace(24),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const CheckBoxForRememberMe(),
+                        Text(
+                          'Forgot Password?',
+                          style: TextStyles.font13BlueRegular,
                         ),
-                      ),
-                      verticalSpace(24),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Checkbox(
-                                value: isTrue,
-                                fillColor: WidgetStateProperty.resolveWith(
-                                  (states) {
-                                    if (states.contains(WidgetState.selected)) {
-                                      return ColorsManager.mainBlue;
-                                    }
-                                    return ColorsManager.white;
-                                  },
-                                ),
-                                onChanged: (value) {
-                                  setState(() {
-                                    isTrue = value!;
-                                  });
-                                },
-                              ),
-                              Text(
-                                'Remember me',
-                                style: TextStyles.font12LightGreyRegular,
-                              ),
-                            ],
-                          ),
-                          Text(
-                            'Forgot Password?',
-                            style: TextStyles.font13BlueRegular,
-                          ),
-                        ],
-                      ),
-                      verticalSpace(36),
-                      AppTextButton(
-                        buttonText: 'Login',
-                        textStyle: TextStyles.font16WhiteMedium,
-                        onPressed: () {},
-                      ),
-                      verticalSpace(16),
-                      const TermAndConditionText(),
-                      verticalSpace(60),
-                      const AlreadyHaveAccountText(),
-                    ],
-                  ),
+                      ],
+                    ),
+                    verticalSpace(36),
+                    AppTextButton(
+                      buttonText: 'Login',
+                      textStyle: TextStyles.font16WhiteMedium,
+                      onPressed: () {
+                        validateThenDoLogin(context);
+                      },
+                    ),
+                    verticalSpace(16),
+                    const TermAndConditionText(),
+                    verticalSpace(60),
+                    const AlreadyHaveAccountText(),
+                    const LoginBlocListener(),
+                  ],
                 ),
               ],
             ),
@@ -115,5 +75,18 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  void validateThenDoLogin(BuildContext context) {
+    if (context.read<LoginCubit>().formKey.currentState!.validate()) {
+      context.read<LoginCubit>().emitLoginState(
+            LoginRequestBody(
+              email: context.read<LoginCubit>().emailController.text,
+              password: context.read<LoginCubit>().passwordController.text,
+            ),
+          );
+    } else {
+      context.read<LoginCubit>().formKey.currentState!.validate();
+    }
   }
 }
