@@ -11,6 +11,10 @@ class AppRegex {
         .hasMatch(password);
   }
 
+  static bool isPhoneNumberValid(String phoneNumber) {
+    return RegExp(r'(^(?:[+0]9)?[0-9]{10,12}$)').hasMatch(phoneNumber);
+  }
+
   static bool hasLowercase(String password) {
     return RegExp(r'(?=.*?[a-z])').hasMatch(password);
   }
