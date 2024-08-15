@@ -12,19 +12,18 @@ class LoginCubit extends Cubit<LoginState> {
   TextEditingController passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   bool isRememberMe = false;
-  void login() {
-    emitLoginState(LoginRequestBody(
-        email: emailController.text, password: passwordController.text));
-  }
 
   void toggleRememberMe(bool value) {
     isRememberMe = value;
     emit(LoginState.rememberMeChanged(isRememberMe));
   }
 
-  void emitLoginState(LoginRequestBody loginRequestBody) async {
+  void emitLoginState() async {
     emit(const LoginState.loading());
-    final response = await _loginRepo.login(loginRequestBody);
+    final response = await _loginRepo.login(LoginRequestBody(
+      email: emailController.text,
+      password: passwordController.text,
+    ));
     response.when(
       success: (loginResponse) => emit(LoginState.success(loginResponse)),
       failure: (error) =>
