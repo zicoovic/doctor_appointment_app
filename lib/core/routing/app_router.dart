@@ -29,8 +29,6 @@ class AppRouter {
                 child: const LoginScreen()));
       case Routes.homeScreen:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
-      case Routes.registerScreen:
-        return MaterialPageRoute(builder: (_) => const Placeholder());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
