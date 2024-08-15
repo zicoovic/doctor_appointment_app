@@ -1,13 +1,12 @@
 import 'package:doctor_appointment_app/core/helper/spacing.dart';
 import 'package:doctor_appointment_app/core/theming/styles.dart';
-import 'package:doctor_appointment_app/features/login/data/models/login_request_body.dart';
 import 'package:doctor_appointment_app/features/login/ui/widgets/check_box_for_remember_me.dart';
 import 'package:doctor_appointment_app/features/login/ui/widgets/term_and_condition_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../logic/cubit/login_cubit.dart';
-import 'widgets/already_have_account_text.dart';
+import 'widgets/dont_have_account_text.dart';
 import '../../../core/widgets/app_text_button.dart';
 import 'widgets/email_and_password.dart';
 import 'widgets/login_bloc_listener.dart';
@@ -65,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     verticalSpace(16),
                     const TermAndConditionText(),
                     verticalSpace(60),
-                    const AlreadyHaveAccountText(),
+                    const DontHaveAccountText(),
                     const LoginBlocListener(),
                   ],
                 ),
@@ -79,14 +78,17 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void validateThenDoLogin(BuildContext context) {
     if (context.read<LoginCubit>().formKey.currentState!.validate()) {
-      context.read<LoginCubit>().emitLoginState(
-            LoginRequestBody(
-              email: context.read<LoginCubit>().emailController.text,
-              password: context.read<LoginCubit>().passwordController.text,
-            ),
-          );
-    } else {
-      context.read<LoginCubit>().formKey.currentState!.validate();
+      context.read<LoginCubit>().emitLoginState();
     }
   }
+
+  // if (context.read<LoginCubit>().formKey.currentState!.validate()) {
+  //   context.read<LoginCubit>().emitLoginState(
+  //         LoginRequestBody(
+  //           email: context.read<LoginCubit>().emailController.text,
+  //           password: context.read<LoginCubit>().passwordController.text,
+  //         ),
+  //       );
+  // } else {
+  //   context.read<LoginCubit>().formKey.currentState!.validate();
 }
