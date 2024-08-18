@@ -1,0 +1,32 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:android)
+
+platform :android do
+  desc "lane for android firebase app distribution"
+  lane :firebase_distribution do
+    sh "flutter clean"
+    sh "flutter build apk --release --flavor production --target lib/main_production.dart --no-tree-shake-icons"
+    firebase_app_distribution(
+      app: "1:47019954315:android:09ae73ba953155adca448e",
+      firebase_cli_token: "1//096mnqgsv6bA_CgYIARAAGAkSNwF-L9IrTz0b35QA-DdmU7HF4w3dHEoza3xuR2JfnAejofcSGR_DTDCQrS4z2ups7GNx7LAwiOU",
+      android_artifact_type: "APK",
+      android_artifact_path: "../build/app/outputs/flutter-apk/app-production-release.apk",
+      testers: "abdelrhmanzakariaqa@gmail.com",
+      release_notes: "First fastlane firebase distribution"
+    ) # هنا أضفنا القوس المغلق
+  end
+end
