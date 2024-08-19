@@ -3,8 +3,8 @@ import 'package:doctor_appointment_app/core/theming/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class HomeToBar extends StatelessWidget {
-  const HomeToBar({super.key});
+class HomeTopBar extends StatelessWidget {
+  const HomeTopBar({super.key});
 
   @override
   Widget build(BuildContext context) {
