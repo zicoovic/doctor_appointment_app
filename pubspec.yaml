@@ -29,43 +29,26 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   cupertino_icons: ^1.0.6
+  dio: ^5.5.0+1
+  easy_localization: ^3.0.3
+  firebase_core: ^2.24.2
   flutter:
     sdk: flutter
-  # state management
   flutter_bloc: ^8.1.6
-  # code generation (mainly used with cubit & retrofit)
+  flutter_native_splash: ^2.2.19
+  flutter_screenutil: ^5.3.1
+  flutter_svg: ^2.0.10+1
   freezed: ^2.5.2
   freezed_annotation: ^2.4.4
-  # for dependency injection
   get_it: ^7.7.0
-
-  # Automatically generate code for converting to and from JSON by annotating Dart classes.
-  json_serializable: ^6.8.0
+  intl: ^0.19.0
   json_annotation: ^4.9.0
-
-  # networking
-  dio: ^5.5.0+1
+  json_serializable: ^6.8.0
+  pretty_dio_logger: ^1.4.0
   retrofit: ^4.1.0
   retrofit_generator: ^8.1.2
-  pretty_dio_logger: ^1.4.0
-
-  # localization
-  intl: ^0.19.0
-  easy_localization: ^3.0.3
-  # for splash screen
-  flutter_native_splash: ^2.2.19
-  # An SVG rendering and widget library for Flutter, which allows painting
-  flutter_svg: ^2.0.10+1
-  # for adaptive screen and font size
-  #This package is used for adaptive screen and font size to make the app look good on different devices
-  flutter_screenutil: ^5.3.1
-  firebase_core: ^2.24.2
+  shared_preferences: ^2.3.2
 dev_dependencies:
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
   build_runner: ^2.4.12
   flutter_lints: ^3.0.0
   flutter_test:
