@@ -1,8 +1,11 @@
 import 'package:doctor_appointment_app/core/routing/app_router.dart';
 import 'package:doctor_appointment_app/core/routing/routes.dart';
 import 'package:doctor_appointment_app/core/theming/colors.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'core/helper/constant.dart';
 
 class DocApp extends StatelessWidget {
   final AppRouter appRouter;
@@ -22,7 +25,8 @@ class DocApp extends StatelessWidget {
         ),
         debugShowCheckedModeBanner: false,
         onGenerateRoute: appRouter.generateRoute,
-        initialRoute: Routes.homeScreen,
+        initialRoute:
+            isLoggedInUser ? Routes.homeScreen : Routes.onBoardingScreen,
       ),
     );
   }
