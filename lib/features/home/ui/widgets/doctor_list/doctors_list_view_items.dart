@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../core/helper/spacing.dart';
-import '../../../../core/theming/styles.dart';
-import '../../data/models/specialization_response_model.dart';
+import '../../../../../core/helper/spacing.dart';
+import '../../../../../core/theming/styles.dart';
+import '../../../data/models/specialization_response_model.dart';
 
 class DoctorsListViewItems extends StatelessWidget {
   final Doctors? doctorsModel;
@@ -13,6 +13,7 @@ class DoctorsListViewItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.only(top: 6.h),
       margin: EdgeInsets.only(bottom: 16.h),
       child: Row(
         children: [

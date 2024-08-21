@@ -1,16 +1,17 @@
 import 'package:doctor_appointment_app/features/home/data/models/specialization_response_model.dart';
 import 'package:doctor_appointment_app/features/home/logic/cubit/home_cubit.dart';
 import 'package:doctor_appointment_app/features/home/logic/cubit/home_state.dart';
-import 'package:doctor_appointment_app/features/home/ui/widgets/doctor_specialty_list_view.dart';
-import 'package:doctor_appointment_app/features/home/ui/widgets/doctors_list_view.dart';
+import 'package:doctor_appointment_app/features/home/ui/widgets/doctor_list/doctor_shammer_loading.dart';
+import 'package:doctor_appointment_app/features/home/ui/widgets/specialization_list.dart/specialty_list_view.dart';
+import 'package:doctor_appointment_app/features/home/ui/widgets/specialization_list.dart/specialty_shimmer_loading.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../core/helper/spacing.dart';
+import '../../../../../core/helper/spacing.dart';
 
-class SpecializationAndDoctorBlocBuilder extends StatelessWidget {
-  const SpecializationAndDoctorBlocBuilder({super.key});
+class SpecializationBlocBuilder extends StatelessWidget {
+  const SpecializationBlocBuilder({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +23,8 @@ class SpecializationAndDoctorBlocBuilder extends StatelessWidget {
       builder: (BuildContext context, HomeState state) {
         return state.maybeWhen(
           specializationsLoading: () => setupLoading(),
-          specializationsSuccess: (specializationResponseModel) {
-            var specializationList =
-                specializationResponseModel.specializationDataList;
+          specializationsSuccess: (specializationDataList) {
+            var specializationList = specializationDataList;
             return setupSuccess(specializationList);
           },
           specializationsError: (error) => setupError(),
@@ -39,28 +39,20 @@ class SpecializationAndDoctorBlocBuilder extends StatelessWidget {
   SizedBox setupError() => const SizedBox.shrink();
 
   Widget setupSuccess(List<SpecializationsData?>? specializationList) {
-    return Expanded(
-      child: Column(
-        children: [
-          DoctorSpecialtyListView(
-            specializationList: specializationList ?? [],
-          ),
-          verticalSpace(24.h),
-          DoctorsListView(
-            doctorsList: specializationList?[0]?.doctorsList ?? [],
-          ),
-          verticalSpace(24.h),
-        ],
-      ),
+    return SpecialtyListView(
+      specializationList: specializationList ?? [],
     );
   }
 
+  /// shimmer Loading for specialization and doctors
   Widget setupLoading() {
-    return const SizedBox(
-      height: 100,
-      width: 100,
-      child: Center(
-        child: CircularProgressIndicator(),
+    return Expanded(
+      child: Column(
+        children: [
+          const SpecialtyShimmerLoading(),
+          verticalSpace(8),
+          const DoctorShammerLoading(),
+        ],
       ),
     );
   }
