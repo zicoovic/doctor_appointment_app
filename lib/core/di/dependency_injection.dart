@@ -6,7 +6,7 @@ import 'package:doctor_appointment_app/features/sign_up/data/repo/sign_up_repo.d
 import 'package:get_it/get_it.dart';
 
 import '../../features/home/data/repo/home_repo.dart';
-import '../../features/home/logic/cubit/home_cubit.dart';
+
 import '../../features/login/data/repo/login_repo.dart';
 import '../../features/sign_up/logic/cubit/sign_up_cubit.dart';
 import '../networking/dio_factory.dart';
